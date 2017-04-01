@@ -34,11 +34,11 @@ io.on('connection', function(socket){
 		console.log('message');
 	})
 
-	//TODO only add if user doesn't exist
-	socket.on('setup', (user) => {
+	// TODO only add if user doesn't exist
+	socket.on('setup', (userinfo) => {
 		console.log('setup');
-		console.log(user);
-		users.push(user);
+		socket.userinfo = userinfo;
+		console.log('User joined:', socket.userinfo.user);
 	})
 
 	// TODO remove user from users. Store username and stuff in socket?
@@ -57,7 +57,10 @@ app.post("/sign-up", (req, res) => {
 });
 
 app.get("/users", (req, res) => {
-    res.send(users);
+	//let sockets = io.sockets.adapter.rooms['LOL STUDID ROOM'].sockets;
+	//console.log(sockets[0]);
+	//console.log(io.sockets.connected[socketid].userinfo);
+    res.send(getUsersInRoom('LOL STUDID ROOM'));
 });
 
 
@@ -65,4 +68,15 @@ server.listen(port, function () {
 	console.log('Server listening at port %d', port);
 });
 
+function getUsersInRoom(roomid) {
+	let users = [];
+	let sockets = io.sockets.adapter.rooms[roomid].sockets;
+	for(let s in sockets) {
+		if(sockets.hasOwnProperty(s)){
+			let socket = io.sockets.connected[s];
+			users.push(socket.userinfo);
+		}
+	}
+	return users;
+}
 
