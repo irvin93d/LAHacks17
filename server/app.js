@@ -6,6 +6,14 @@ var bodyParser = require('body-parser')
 var port = process.env.PORT || 3000;
 // TODO make real database
 let users = [];
+let chatWindowTime = 10 * 1000; // 10 seconds
+
+class Chatroom {
+    constructor(){
+        this.expire = Date.now() + chatWindowTime;
+        this.numberOfClients = 0;
+    }
+}
 
 // parse various different custom JSON types as JSON
 app.use(bodyParser.json());
@@ -14,6 +22,7 @@ app.use(express.static(__dirname + '/public'));
 // Handle chat clients
 io.on('connection', function(socket){ 
     console.log("Client Connected");
+    console.log(socket);
  });
 
 // Routing
@@ -25,7 +34,7 @@ app.post("/sign-up", (req, res) => {
 });
 
 app.get("/users", (req, res) => {
-    res.send(JSON.stringify(users));
+    res.send(users);
 });
 
 

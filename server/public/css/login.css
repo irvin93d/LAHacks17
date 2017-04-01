@@ -12,7 +12,7 @@ body {
     width: 60%;
     height: 16em;
     background-size: contain;
-    background: url('/home/luke/Clones/LAHacks17/public/logo.png') no-repeat center center;
+    background: url('../assets/logo.png') no-repeat center center;
     margin: 0 auto;
 }
 
