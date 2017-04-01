@@ -12,6 +12,7 @@ class Chatroom {
     constructor(){
         this.expire = Date.now() + chatWindowTime;
         this.numberOfClients = 0;
+        this.id = "LOL STUPID ROOM";
     }
 }
 
