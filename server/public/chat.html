@@ -37,12 +37,11 @@
         </div>
         <div class="row">
             <div id="message-input" class="col-lg-6">
-{{ message }}
                 <div class="input-group">
-                <input v-model="message" type="text" class="form-control" placeholder="Write a message...">
-                <span class="input-group-btn">
-                    <button class="btn btn-default" type="button">Send</button>
-                </span>
+                    <input @keyup.enter="send" v-model="message" type="text" class="form-control" placeholder="Write a message...">
+                    <span class="input-group-btn">
+                    <button v-on:click="send" class="btn btn-default" type="button">Send</button>
+                    </span>
                 </div><!-- /input-group -->
             </div><!-- /.col-lg-6 -->
         </div>

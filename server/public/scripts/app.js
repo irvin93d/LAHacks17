@@ -7,7 +7,14 @@ window.onload = () => {
     var input = new Vue({
     el: '#message-input',
     data: {
-        message: 'Hello Vue!'
+        message: ''
+    },
+    methods: {
+        send: function() {
+            console.log(this.message);
+            this.message = "";
+            socket.emit('message', this.message);
+        }
     }
     })
 }
