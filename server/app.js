@@ -23,8 +23,30 @@ app.use(express.static(__dirname + '/public'));
 // Handle chat clients
 io.on('connection', function(socket){ 
     console.log("Client Connected");
-    console.log(socket);
- });
+
+	// TODO DONT HARD CODE 
+	socket.join('LOL STUDID ROOM');
+	// TODO should .to be included?
+	socket.broadcast.to('LOL STUDID ROOM').emit('message','Joined room');
+
+	
+	socket.on('message', () => {
+		console.log('message');
+	})
+
+	//TODO only add if user doesn't exist
+	socket.on('setup', (user) => {
+		console.log('setup');
+		console.log(user);
+		users.push(user);
+	})
+
+	// TODO remove user from users. Store username and stuff in socket?
+	socket.on('disconnect', () => {
+		console.log('Disconnect');
+	})
+});
+
 
 // Routing
 app.post("/sign-up", (req, res) => {
@@ -40,6 +62,7 @@ app.get("/users", (req, res) => {
 
 
 server.listen(port, function () {
-  console.log('Server listening at port %d', port);
+	console.log('Server listening at port %d', port);
 });
+
 
