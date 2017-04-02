@@ -34,7 +34,7 @@ io.on('connection', function(socket){
 	socket.on('message', (msg) => {
 		let message = {};
 		message.time = Date.now();
-		message.user = socket.user;
+		message.user = socket.user.nick;
 		message.content = msg;
 		socket.broadcast.to(room.id).emit('message', message);
 		console.log(message);
@@ -46,7 +46,7 @@ io.on('connection', function(socket){
 		socket.join(room.id);
 		socket.user = user;
 		socket.user.nick = setNickname(user.nation);
-		console.log('User ', socket.user.user, 'joined room', room.id);
+		console.log('User ', socket.user.nick, 'joined room', room.id);
 		socket.broadcast.to(socket.roomID).emit('user joined', user.nick);
 	})
 
@@ -86,9 +86,9 @@ function getAvailableRoom() {
 	return chatroom;
 }
 
-// TODO 
+// TODO Fix nation, e.g. SE to Swedish 
 function setNickname(nation){
-	return nation + animals();
+	return nation + ' ' + animals();
 }
 
 function destroyExpiredChatrooms(){
