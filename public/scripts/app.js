@@ -1,4 +1,4 @@
-let serverAddress = 'http://localhost:3000';
+let serverAddress = 'http://sahdude.me';
 let user = {};
 var socket = io.connect(serverAddress);
 let state = {
