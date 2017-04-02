@@ -27,8 +27,6 @@ app.use(express.static(__dirname + '/public'));
 // Handle chat clients
 io.on('connection', function(socket){ 
 
-	let room;
-
     console.log('Client Connected');
 	// TODO Store all messages	
 	socket.on('message', (msg) => {
@@ -36,18 +34,13 @@ io.on('connection', function(socket){
 		message.time = Date.now();
 		message.user = socket.user.nick;
 		message.content = msg;
-		socket.broadcast.to(room.id).emit('message', message);
+		socket.broadcast.to(socket.roomid).emit('message', message);
 		console.log(message);
 	})
 
 	socket.on('setup', (user) => {
-		room = getAvailableRoom();
-		++room.numberOfClients;
-		socket.join(room.id);
 		socket.user = user;
-		socket.user.nick = setNickname(user.nation);
-		console.log('User ', socket.user.nick, 'joined room', room.id);
-		socket.broadcast.to(socket.roomID).emit('user joined', user.nick);
+		assignNewRoom(socket);	
 	})
 
 	socket.on('disconnect', () => {
@@ -91,6 +84,16 @@ function setNickname(nation){
 	return nation + ' ' + animals();
 }
 
+function assignNewRoom(socket){
+	room = getAvailableRoom();
+	socket.roomid = room.id;
+	++room.numberOfClients;
+	socket.join(room.id);
+	socket.user.nick = setNickname(socket.user.nation);
+	console.log('User ', socket.user.nick, 'joined room', room.id);
+	socket.broadcast.to(socket.roomID).emit('user joined', socket.user.nick);
+}
+
 function destroyExpiredChatrooms(){
 	let room;
 	for(i = 0 ; i < chatrooms.length ; ++i ){
@@ -102,9 +105,20 @@ function destroyExpiredChatrooms(){
 				users: getUsersInRoom(room.id).map((u) => {
 					u.nick;
 				})
-			});
-			//TODO put in temp arra
+			});	
+
 			chatrooms.splice(i,1);
+			
+			let sockets = io.sockets.adapter.rooms[room.id].sockets;
+			for(let s in sockets) {
+				if(sockets.hasOwnProperty(s)){
+					let socket = io.sockets.connected[s];
+					socket.leave(room.id);
+					assignNewRoom(socket);	
+				}
+			}
+
+			//TODO put in temp arra
 			--i;
 		}
 		// TODO else update room time
