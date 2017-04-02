@@ -71,12 +71,27 @@ window.onload = () => {
             name: "",
             nation: "AF",
             profile: "",
-            visible: true
+            visible: true,
+            invalidName: false,
+            invalidUrl: false
         },
 
         methods: {
         send: function() {
-            console.log("Signed in");
+            if(this.name.length === 0) {
+                this.invalidName = true;
+                return;
+            } else {
+                this.invalidName = false;
+            }
+
+            if(this.profile.length === 0) {
+                this.invalidUrl = true;
+                return;
+            } else {
+                this.invalidUrl = false;
+            }
+
             user = {name: this.name, nation: this.nation, profile: this.profile};
             socket.emit('setup', user);
             user.name = "You";

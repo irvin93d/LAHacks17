@@ -125,6 +125,10 @@ img {
     border: 1px solid #ff656c;
 }
 
+.login-block input:active, .login-block .invalidInput {
+    border: 1px solid #ff656c;
+}
+
 .login-block button {
     width: 100%;
     height: 40px;

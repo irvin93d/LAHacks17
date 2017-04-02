@@ -24,9 +24,9 @@
 		</div>
 		<div class="login-block" id="user-info">
 			<h1>User Info</h1>
-			<input type="text" v-model="name" value="" placeholder="Name" id="name" />
+			<input type="text" v-bind:class="{invalidInput: invalidName }" v-model="name" value="" placeholder="Name" id="name" required/>
 			<!-- <input type="text" v-model="nation" value="" placeholder="Nation" id="nation" /> -->
-			<input type="text" v-model="profile" value="" placeholder="Facebook URL" id="facebook" style="margin-bottom: 10px;" />
+			<input type="url" v-bind:class="{invalidInput: invalidUrl }" v-model="profile" value="" placeholder="Facebook URL" id="facebook" style="margin-bottom: 10px;"/>
 		    <div class="form-group">
 			    <h2>Which country are you representing?</h2>
 			    <select v-model="nation" class="form-control">
