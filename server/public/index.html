@@ -18,23 +18,21 @@
 </head>
 <body>
 
-<div class ="fluid-container" id="user-info">
-	<div v-if="visible">
-		<div class="logo">
-			<img src="assets/logo.png">
-		</div>
-		<div class="login-block" id="user-info">
-			<h1>User Info</h1>
-			<input type="text" v-model="name" value="" placeholder="Name" id="name" />
-			<input type="text" v-model="nation" value="" placeholder="Nation" id="nation" />
-			<input type="text" v-model="profile" value="" placeholder="Facebook URL" id="facebook" />
-			<button v-on:click="send">Let's Chat!</button>
-		</div>
+<div class ="fluid-container" id="user-info" v-if="visible">
+	<div class="logo">
+		<img src="assets/logo.png">
+	</div>
+	<div class="login-block" id="user-info">
+		<h1>User Info</h1>
+		<input type="text" v-model="name" value="" placeholder="Name" id="name" />
+		<input type="text" v-model="nation" value="" placeholder="Nation" id="nation" />
+		<input type="text" v-model="profile" value="" placeholder="Facebook URL" id="facebook" />
+		<button v-on:click="send">Let's Chat!</button>
 	</div>
 </div>
 
-	<div id="chat">
-		<div class="chat-wrapper" v-if="visible">
+	<div id="chat" v-if="visible">
+		<div class="chat-wrapper">
 			<div class="message-list">
 				<message-item v-for="item in messages" v-bind:message="item"></message-item>
 			</div>

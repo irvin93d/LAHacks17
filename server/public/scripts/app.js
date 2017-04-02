@@ -50,6 +50,12 @@ window.onload = () => {
             state.addMessage({content: this.message, user: "you"});
             socket.emit('message', this.message);
             this.message = "";
+            
+            // Apparently vue is asynchronous
+            this.$nextTick(()=> {
+                var container = this.$el.querySelector(".message-list");                
+                window.scrollTo(0, container.scrollHeight);
+            })
         }
     }
     });
@@ -79,9 +85,17 @@ window.onload = () => {
     socket.on('message', function(message) {
         state.messages.push(message);
         console.log(message.content);
+        // Apparently vue is asynchronous
+        Vue.nextTick(()=> {
+            var container = chat.$el.querySelector(".message-list");                
+            window.scrollTo(0, container.scrollHeight);
+        })
     });
 
 
 }
 
 
+function scrollToBottom() {
+    
+}
