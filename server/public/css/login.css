@@ -194,6 +194,7 @@ img {
 
 .max-width {
     max-width: 800px;
+    padding-top: 50px;
     margin-right: auto;
     margin-left: auto;
     display: flex;
