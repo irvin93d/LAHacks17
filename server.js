@@ -97,6 +97,8 @@ function assignNewRoom(socket){
 	socket.user.nick = setNickname(socket.user.nation);
 	console.log('User ', socket.user.nick, 'joined room', room.id);
 	socket.broadcast.to(socket.roomID).emit('user joined', socket.user.nick);
+	
+	io.to(socket.id).emit('nickname', socket.user.nick);
 }
 
 function destroyExpiredChatrooms(){
@@ -127,7 +129,6 @@ function destroyExpiredChatrooms(){
 				}
 			}
 
-			//TODO put in temp arra
 			--i;
 		} else {
 			io.to(room.id).emit('tick',	{
