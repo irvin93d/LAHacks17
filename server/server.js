@@ -54,14 +54,19 @@ server.listen(port, function () {
 
 function getUsersInRoom(roomid) {
 	let users = [];
-	let sockets = io.sockets.adapter.rooms[roomid].sockets;
-	for(let s in sockets) {
-		if(sockets.hasOwnProperty(s)){
-			let socket = io.sockets.connected[s];
-			users.push(socket.user);
+	let room = io.sockets.adapter.rooms[roomid];
+	if(room){
+		let sockets = room.sockets;
+		for(let s in sockets) {
+			if(sockets.hasOwnProperty(s)){
+				let socket = io.sockets.connected[s];
+				users.push(socket.user);
+			}
 		}
+		return users;
+	} else {
+		return [];
 	}
-	return users;
 }
 
 function getAvailableRoom() {
@@ -112,12 +117,15 @@ function destroyExpiredChatrooms(){
 				console.log('Removed', expiredChatrooms.splice(0,1)[0].id, 'from expired chatrooms');
 			},30000);
 			
-			let sockets = io.sockets.adapter.rooms[room.id].sockets;
-			for(let s in sockets) {
-				if(sockets.hasOwnProperty(s)){
-					let socket = io.sockets.connected[s];
-					socket.leave(room.id);
-					assignNewRoom(socket);	
+			let a = io.sockets.adapter.rooms[room.id];
+			if(a){
+				let sockets = a.sockets;
+				for(let s in sockets) {
+					if(sockets.hasOwnProperty(s)){
+						let socket = io.sockets.connected[s];
+						socket.leave(room.id);
+						assignNewRoom(socket);	
+					}
 				}
 			}
 
