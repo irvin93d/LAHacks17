@@ -30,7 +30,7 @@
 		    <div class="form-group">
 			    <h2>Which country are you representing?</h2>
 			    <select v-model="nation" class="form-control">
-					<option value="AF">Afghanistan</option>
+					<option value="AF" selected>Afghanistan</option>
 					<option value="AX">Åland Islands</option>
 					<option value="AL">Albania</option>
 					<option value="DZ">Algeria</option>
@@ -290,7 +290,7 @@
 	<div id="chat" v-if="visible">
 		<div class="chat-wrapper">
 			<div class="message-list">
-				<message-item v-for="item in messages" v-bind:message="item" v-bind:me="item.user.name == 'You'"></message-item>
+				<message-item v-for="item in messages" v-bind:message="item" v-bind:me="item.user == 'You'"></message-item>
 			</div>
 			<div id="message-input">
 				<input @keyup.enter="send" v-model="message" type="text" class="form-control" placeholder="Write a message...">

@@ -22,6 +22,11 @@ let state = {
 };
 
 
+socket.on('room expired', function(data) {
+    console.log("Room expired");
+    console.log(data);
+});
+
 window.onload = () => {
 
     // Message list 
@@ -64,7 +69,7 @@ window.onload = () => {
         el: '#user-info',
         data: {
             name: "",
-            nation: "",
+            nation: "AF",
             profile: "",
             visible: true
         },
@@ -93,9 +98,4 @@ window.onload = () => {
             window.scrollTo(0, container.scrollHeight);
         })
     });
-}
-
-
-function scrollToBottom() {
-    
 }
