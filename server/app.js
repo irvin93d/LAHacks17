@@ -29,16 +29,20 @@ io.on('connection', function(socket){
 	// TODO should .to be included?
 	socket.broadcast.to('LOL STUDID ROOM').emit('message','Joined room');
 
-	
-	socket.on('message', () => {
-		console.log('message');
+	// TODO Store all messages	
+	socket.on('message', (msg) => {
+		let message = {};
+		message.time = Date.now();
+		message.user = socket.user;
+		message.content = msg;
+		console.log(message);
 	})
 
 	// TODO only add if user doesn't exist
-	socket.on('setup', (userinfo) => {
+	socket.on('setup', (user) => {
 		console.log('setup');
-		socket.userinfo = userinfo;
-		console.log('User joined:', socket.userinfo.user);
+		socket.user = user;
+		console.log('User joined:', socket.user.user);
 	})
 
 	// TODO remove user from users. Store username and stuff in socket?
@@ -57,9 +61,6 @@ app.post("/sign-up", (req, res) => {
 });
 
 app.get("/users", (req, res) => {
-	//let sockets = io.sockets.adapter.rooms['LOL STUDID ROOM'].sockets;
-	//console.log(sockets[0]);
-	//console.log(io.sockets.connected[socketid].userinfo);
     res.send(getUsersInRoom('LOL STUDID ROOM'));
 });
 
@@ -74,7 +75,7 @@ function getUsersInRoom(roomid) {
 	for(let s in sockets) {
 		if(sockets.hasOwnProperty(s)){
 			let socket = io.sockets.connected[s];
-			users.push(socket.userinfo);
+			users.push(socket.user);
 		}
 	}
 	return users;
