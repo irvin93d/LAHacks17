@@ -36,7 +36,7 @@ window.onload = () => {
             <div class="message-item" v-bind:class="{me: me}">
                 <span class="message-item--content">{{message.content}}</span>
                 <br>
-                <span class="message-item--from">-{{message.user}}</span>
+                <span class="message-item--from">- {{message.user}}</span>
             </div>
         `
     });
@@ -91,7 +91,7 @@ window.onload = () => {
 
     socket.on('message', function(message) {
         state.messages.push(message);
-        console.log(message.content);
+        console.log(message);
         // Apparently vue is asynchronous
         Vue.nextTick(()=> {
             var container = chat.$el.querySelector(".message-list");                
