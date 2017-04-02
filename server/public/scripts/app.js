@@ -31,7 +31,7 @@ window.onload = () => {
             <div class="message-item" v-bind:class="{me: me}">
                 <span class="message-item--content">{{message.content}}</span>
                 <br>
-                <span class="message-item--from">-{{message.user.name}}</span>
+                <span class="message-item--from">-{{message.user}}</span>
             </div>
         `
     });
@@ -47,8 +47,7 @@ window.onload = () => {
 
     methods: {
         send: function() {
-            console.log(this.message);
-            state.addMessage({content: this.message, user: user});
+            state.addMessage({content: this.message, user: "You"});
             socket.emit('message', this.message);
             this.message = "";
             
@@ -94,8 +93,6 @@ window.onload = () => {
             window.scrollTo(0, container.scrollHeight);
         })
     });
-
-
 }
 
 
