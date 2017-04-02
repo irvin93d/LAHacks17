@@ -27,11 +27,13 @@
 		</div>
 		<div class ="row">
 			<div class="col-md-4">
-				<div class="login-block">
+				<div class="login-block" id="user-info">
 					<h1>User Info</h1>
-					<input type="text" value="" placeholder="Name" id="username" />
-					<input type="text" value="" placeholder="Nation" id="password" />
-					<button>Let's Chat!</button>
+					<input type="text" v-model="name" value="" placeholder="Name" id="name" />
+					<input type="text" v-model="nation" value="" placeholder="Nation" id="nation" />
+					<input type="text" v-model="profile" value="" placeholder="Facebook URL" id="facebook" />
+					<button v-on:click="send">Let's Chat!</button>
+					{{profile}}
 				</div>
 			</div>
 		</div>

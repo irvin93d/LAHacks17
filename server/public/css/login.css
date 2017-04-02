@@ -26,6 +26,7 @@ img {
     max-width: 500px;
     height: 215px;
     padding: 20px;
+    padding-bottom: 70px;
     display: block;
     background: #fff;
     border-radius: 5px;
@@ -60,7 +61,7 @@ img {
     font-size: 22px;
     /*text-transform: uppercase;*/
     margin-top: 0;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 .login-block input {
@@ -76,22 +77,22 @@ img {
     outline: none;
 }
 
-.login-block input#username {
+.login-block input#name {
     background: #fff url('http://i.imgur.com/u0XmBmv.png') 20px top no-repeat;
     background-size: 16px 80px;
 }
 
-.login-block input#username:focus {
+.login-block input#name:focus {
     background: #fff url('http://i.imgur.com/u0XmBmv.png') 20px bottom no-repeat;
     background-size: 16px 80px;
 }
 
-.login-block input#password {
+.login-block input#nation {
     background: #fff url('http://i.imgur.com/Qf83FTt.png') 20px top no-repeat;
     background-size: 16px 80px;
 }
 
-.login-block input#password:focus {
+.login-block input#nation:focus {
     background: #fff url('http://i.imgur.com/Qf83FTt.png') 20px bottom no-repeat;
     background-size: 16px 80px;
 }

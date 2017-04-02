@@ -10,6 +10,8 @@ let state = {
         this.messages.push(m);
     }
     };
+
+
 socket.emit('setup', {user: "Jonathan", country: "Sweden", profile: "www.facebook.com"});
 
 window.onload = () => {
@@ -41,6 +43,26 @@ window.onload = () => {
         data: {
             messages: state.messages
         }
+    });
+
+    var signIn = new Vue({
+        el: '#user-info',
+        data: {
+            name: "",
+            nation: "",
+            profile: ""
+        },
+
+        methods: {
+        send: function() {
+            console.log(this.name);
+            socket.emit('setup', {user: this.name, nation: this.nation, profile: this.profile});
+            this.name = "";
+            this.nation = "";
+            this.profile= "";
+
+        }
+    }
     });
 
 }
