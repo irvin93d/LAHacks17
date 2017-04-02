@@ -148,5 +148,5 @@ window.onload = () => {
     socket.on('nickname', function(nick) {
         chat.nick = nick;
     });
-
+   
 }
