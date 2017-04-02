@@ -6,7 +6,7 @@ var io = require('socket.io')(server);
 var bodyParser = require('body-parser')
 var port = process.env.PORT || 3000;
 // TODO make real database
-let chatWindowTime = 20 * 1000; // TODO set to 10 seconds
+let chatWindowTime = 10 * 60 * 1000; // TODO set to 10 seconds
 let maxClientsPerRoom = 4;
 let chatrooms = [];
 let expiredChatrooms = {};
