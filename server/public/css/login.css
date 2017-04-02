@@ -185,9 +185,13 @@ img {
     background: #f1f0f0;
     overflow-wrap: break-word;
     margin: 5px;
+    align-self: flex-start;
 }
 
-.message-item--me {
+.me {
+    align-self: flex-end;
+    background: #ff656c;
+    color: white;
 }
 
 #message-input {

@@ -1,4 +1,5 @@
 let serverAddress = 'http://localhost:3000';
+let user = {};
 var socket = io.connect(serverAddress);
 let state = {
     messages: [
@@ -25,12 +26,12 @@ window.onload = () => {
 
     // Message list 
     Vue.component('message-item', {
-        props: ['message'],
+        props: ['message', 'me'],
         template: `
-            <div class="message-item">
+            <div class="message-item" v-bind:class="{me: me}">
                 <span class="message-item--content">{{message.content}}</span>
                 <br>
-                <span class="message-item--from">-{{message.user}}</span>
+                <span class="message-item--from">-{{message.user.name}}</span>
             </div>
         `
     });
@@ -47,7 +48,7 @@ window.onload = () => {
     methods: {
         send: function() {
             console.log(this.message);
-            state.addMessage({content: this.message, user: "you"});
+            state.addMessage({content: this.message, user: user});
             socket.emit('message', this.message);
             this.message = "";
             
@@ -72,7 +73,9 @@ window.onload = () => {
         methods: {
         send: function() {
             console.log("Signed in");
-            socket.emit('setup', {user: this.name, nation: this.nation, profile: this.profile});
+            user = {name: this.name, nation: this.nation, profile: this.profile};
+            socket.emit('setup', user);
+            user.name = "You";
             this.name = "";
             this.nation = "";
             this.profile= "";
