@@ -30,7 +30,7 @@ window.onload = () => {
             <div class="message-item">
                 <span class="message-item--content">{{message.content}}</span>
                 <br>
-                <span class="message-item--from">-{{message.user}}</span>
+                <span class="message-item--from">-{{message.user.nick}}</span>
             </div>
         `
     });
@@ -91,8 +91,6 @@ window.onload = () => {
             window.scrollTo(0, container.scrollHeight);
         })
     });
-
-
 }
 
 
