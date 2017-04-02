@@ -14,13 +14,7 @@ let state = {
 };
 
 
-socket.on('room expired', function(data) {
-    console.log("Room expired");
-    console.log(data);
-    state.messages.splice(0,state.messages.length);
-    state.seconds = 0;
-    state.noUsers = 0;
-});
+
 
 socket.on('disconnect', function() {
 	console.log('disconnect fired!');
@@ -53,7 +47,9 @@ window.onload = () => {
         messages: state.messages,
         users: 0,
         seconds: 0,
-        visible: false
+        visible: false,
+        requestContact: true,
+        users: ["boaty mc boatface", "fuck balls"]
     },
 
     methods: {
@@ -124,5 +120,14 @@ window.onload = () => {
         chat.seconds = Math.floor(data.timeToExpire / 1000)
         chat.noUsers = data.noUsers;
     });
+
+    socket.on('room expired', function(data) {
+    console.log("Room expired");
+    console.log(data);
+    state.messages.splice(0,state.messages.length);
+    chat.seconds = 0;
+    chat.noUsers = 0;
+    chat.requestContact = true;
+});
 
 }

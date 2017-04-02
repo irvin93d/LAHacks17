@@ -97,6 +97,11 @@
 				<input @keyup.enter="send" v-model="message" type="text" class="form-control" placeholder="Write a message...">
 			</div>
 		</div>
+
+		<div class="request-contact" v-if="requestContact">
+			<div v-for="user in users">{{user}}</div>
+			<button>request</button>
+		</div>
 	</div>
 </body>
 
