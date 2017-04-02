@@ -107,7 +107,10 @@ function destroyExpiredChatrooms(){
 				})
 			});	
 
-			chatrooms.splice(i,1);
+			expiredChatrooms.push(chatrooms.splice(i,1)[0]);
+			setTimeout(() => {
+				console.log('Removed', expiredChatrooms.splice(0,1)[0].id, 'from expired chatrooms');
+			},30000);
 			
 			let sockets = io.sockets.adapter.rooms[room.id].sockets;
 			for(let s in sockets) {
