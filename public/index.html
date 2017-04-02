@@ -13,6 +13,10 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.js"></script>
 	<!-- Our logic -->
 	<script src="scripts/app.js"></script>
+
+	<script src="service-worker-registration.js"></script>
+	<link rel="manifest" href="/manifest.json">
+
 	<meta charset="UTF-8">
 
 	<title>Olympic Login - Cool Shit</title>
@@ -77,13 +81,16 @@
 
 </div>
 
-	<div id="chat" v-if="visible">
+	<div id="chat" v-if="visible" v-cloak>
 		<div class="chat-wrapper">
 			<div class="message-list">
 				<div class="max-width">
 					<div class="top-bar">
 						<div>
 							<i class="fa fa-clock-o" aria-hidden="true"></i> {{seconds}}
+						</div>
+						<div>
+							{{nick}}
 						</div>
 						<div>
 							<i class="fa fa-users" aria-hidden="true"></i> {{noUsers}}
@@ -98,12 +105,20 @@
 			</div>
 		</div>
 
-		<div class="request-contact" v-if="requestContact && users.length">
+		<div class="pop-up" v-if="requestContact && users.length">
 			<div v-for="user in users">
 				<input type="checkbox" :id="user" :value="user" v-model="checkedNames">
 				<label :for="user">{{user}}</label>
 			</div>
 			<button v-on:click="request">request</button>
+		</div>
+
+		<div class="pop-up" v-if="matches.length">
+			<h1>Match!</h1>
+			<div>{{matches[0].nick}}</div>
+			<div>{{matches[0].name}}</div>
+			<a v-bind:href="matches[0].profile">{{matches[0].profile}}</a>
+			<button v-on:click="dismiss">Dismiss</button> 
 		</div>
 	</div>
 </body>

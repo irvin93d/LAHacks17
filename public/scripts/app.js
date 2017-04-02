@@ -47,11 +47,13 @@ window.onload = () => {
         messages: state.messages,
         noUsers: 0,
         seconds: 0,
+        nick: "",
         visible: false,
         requestContact: true,
-        users: ["boaty mc boatface", "fuck balls"],
+        users: [],
         roomID: 0,
-        checkedNames: []
+        checkedNames: [],
+        matches: []
     },
 
     methods: {
@@ -69,11 +71,14 @@ window.onload = () => {
         request: function() {
             console.log("requesting " + this.checkedNames);
             if(this.checkedNames.length) {
-                socket.emit('request contact', {roomId: this.roomID, names: this.checkedNames});
+                socket.emit('request contact', {roomID: this.roomID, names: this.checkedNames, me: user.prevNick});
             }
             this.roomID = 0;
             this.requestContact = false;
             this.checkedNames = [];
+        },
+        dismiss: function() {
+            this.matches.splice(0,1);
         }
     }
     });
@@ -81,9 +86,9 @@ window.onload = () => {
     var signIn = new Vue({
         el: '#user-info',
         data: {
-            name: "",
-            nation: "Afghan",
-            profile: "",
+            name: localStorage.getItem("name"),
+            nation: localStorage.getItem("nation"),
+            profile: localStorage.getItem("profile"),
             visible: true,
             invalidName: false,
             invalidUrl: false
@@ -104,8 +109,11 @@ window.onload = () => {
             } else {
                 this.invalidUrl = false;
             }
-
             user = {name: this.name, nation: this.nation, profile: this.profile};
+            localStorage.setItem("name", user.name);
+            localStorage.setItem("nation", user.nation);
+            localStorage.setItem("profile", user.profile);
+
             socket.emit('setup', user);
             this.name = "";
             this.nation = "";
@@ -136,11 +144,27 @@ window.onload = () => {
         console.log("Room expired");
         console.log(data);
         state.messages.splice(0,state.messages.length);
-        chat.users = data.users.filter( (u) => u && u.nick != user.nick);
+        console.log(user);
+        chat.users = data.users.filter( (u) => u && u != user.nick);
         chat.seconds = 0;
         chat.noUsers = 0;
         chat.requestContact = true;
         chat.roomID = data.roomID;
-});
+        setTimeout(() => {
+            chat.request();
+        }, 25 * 1000)
+    });
+    
+    socket.on('nickname', function(nick) {
+        user.prevNick = user.nick;        
+        chat.nick = nick;
+        user.nick = nick;
+    });
 
+    socket.on('match', function(user) {
+        console.log("match");
+        console.log(user);
+        chat.matches.push(user);
+    })
+   
 }

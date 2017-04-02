@@ -6,10 +6,10 @@ var io = require('socket.io')(server);
 var bodyParser = require('body-parser')
 var port = process.env.PORT || 3000;
 // TODO make real database
-let chatWindowTime = 10 * 1000; // TODO set to 10 seconds
+let chatWindowTime = 10 * 60 * 1000; // TODO set to 10 seconds
 let maxClientsPerRoom = 4;
 let chatrooms = [];
-let expiredChatrooms = [];
+let expiredChatrooms = {};
 let nextRoomId = 0;
 
 class Chatroom {
@@ -17,6 +17,7 @@ class Chatroom {
 		this.id = nextRoomId++;
 		this.expire = Date.now() + chatWindowTime;
 		this.numberOfClients = 0;
+		this.users = [];
 	}
 }
 
@@ -40,7 +41,36 @@ io.on('connection', function(socket){
 
 	socket.on('setup', (user) => {
 		socket.user = user;
+		socket.user.socketID = socket.id; 
 		assignNewRoom(socket);	
+	})
+
+	socket.on('request contact', (data) => {
+		if(!expiredChatrooms[data.roomID]) {
+			return;
+		}
+		let cr = expiredChatrooms[data.roomID];
+		for(req of data.names) {
+			let key = [data.me, req].sort().join(',');
+			if(cr.matches[key]) {
+				// match
+				let thi;
+				let oth;
+				for(let i = 0 ; i < cr.users.length ; ++i){
+					if(data.me === cr.users[i].nick){
+						thi = cr.users[i];
+					} else if(req === cr.users[i].nick) {
+						oth = cr.users[i];
+					} 
+				}
+				console.log(thi);
+				console.log(oth);
+				io.to(thi.socketID).emit('match', oth);
+				io.to(oth.socketID).emit('match', thi);
+			} else {
+				cr.matches[key] = true;
+			}
+		}
 	})
 
 	socket.on('disconnect', () => {
@@ -97,6 +127,8 @@ function assignNewRoom(socket){
 	socket.user.nick = setNickname(socket.user.nation);
 	console.log('User ', socket.user.nick, 'joined room', room.id);
 	socket.broadcast.to(socket.roomID).emit('user joined', socket.user.nick);
+	room.users.push(socket.user);
+	io.to(socket.id).emit('nickname', socket.user.nick);
 }
 
 function destroyExpiredChatrooms(){
@@ -110,9 +142,11 @@ function destroyExpiredChatrooms(){
 				users: getUsersInRoom(room.id).map((u) => u.nick)
 			});	
 
-			expiredChatrooms.push(chatrooms.splice(i,1)[0]);
+			let cr = chatrooms.splice(i,1)[0];
+			cr.matches = {};
+			expiredChatrooms[cr.id] = JSON.parse(JSON.stringify(cr));
 			setTimeout(() => {
-				console.log('Removed', expiredChatrooms.splice(0,1)[0].id, 'from expired chatrooms');
+				delete expiredChatrooms[cr.id];
 			},30000);
 			
 			let a = io.sockets.adapter.rooms[room.id];
@@ -127,7 +161,6 @@ function destroyExpiredChatrooms(){
 				}
 			}
 
-			//TODO put in temp arra
 			--i;
 		} else {
 			io.to(room.id).emit('tick',	{
