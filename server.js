@@ -6,7 +6,7 @@ var io = require('socket.io')(server);
 var bodyParser = require('body-parser')
 var port = process.env.PORT || 3000;
 // TODO make real database
-let chatWindowTime = 10 * 1000; // TODO set to 10 seconds
+let chatWindowTime = 20 * 1000; // TODO set to 10 seconds
 let maxClientsPerRoom = 4;
 let chatrooms = [];
 let expiredChatrooms = {};
@@ -51,17 +51,24 @@ io.on('connection', function(socket){
 		}
 		let cr = expiredChatrooms[data.roomID];
 		for(req of data.names) {
-			let key = [socket.user.nick, req].sort().join(',');
+			let key = [data.me, req].sort().join(',');
 			if(cr.matches[key]) {
 				// match
+				let thi;
+				let oth;
 				for(let i = 0 ; i < cr.users.length ; ++i){
-					if(req === cr.users[i].nick) {
-						 io.to(socket.id).emit('match', cr.users[i].user);
-						 io.to(cr.users[i].socketID).emit('match', data.user);
-					}
+					if(data.me === cr.users[i].nick){
+						thi = cr.users[i];
+					} else if(req === cr.users[i].nick) {
+						oth = cr.users[i];
+					} 
 				}
+				console.log(thi);
+				console.log(oth);
+				io.to(thi.socketID).emit('match', oth);
+				io.to(oth.socketID).emit('match', thi);
 			} else {
-				cr.mathes[key] = true;
+				cr.matches[key] = true;
 			}
 		}
 	})
@@ -137,7 +144,7 @@ function destroyExpiredChatrooms(){
 
 			let cr = chatrooms.splice(i,1)[0];
 			cr.matches = {};
-			expiredChatrooms[cr.id] = cr;
+			expiredChatrooms[cr.id] = JSON.parse(JSON.stringify(cr));
 			setTimeout(() => {
 				delete expiredChatrooms[cr.id];
 			},30000);
