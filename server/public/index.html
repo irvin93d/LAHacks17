@@ -1,35 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-        <link rel="stylesheet" href="css/login.css">
-        <link rel="stylesheet" href"css/bootstrap.css">
-		<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta charset="UTF-8">
+	<link rel="stylesheet" href="css/login.css">
 
-<title>Olympic Login - Cool Shit</title>
+	<link rel="stylesheet" href"css/bootstrap.css">
+	<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<!--Other libraries-->
+	<script src="https://unpkg.com/vue"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.js"></script>
+	<!-- Our logic -->
+	<script src="scripts/app.js"></script>
+	<meta charset="UTF-8">
+
+	<title>Olympic Login - Cool Shit</title>
 </head>
-
 <body>
-<div class ="fluid-container">
-	<div class ="row">
-		<div class="col-md-4 vcenter">
-			<div class="logo">
-				<img src="assets/logo.png">
+	<div class ="fluid-container">
+		<div class ="row">
+			<div class="col-md-4 vcenter">
+				<div class="logo">
+					<img src="assets/logo.png">
+				</div>
+			</div>
+		</div>
+		<div class ="row">
+			<div class="col-md-4">
+				<div class="login-block">
+					<h1>User Info</h1>
+					<input type="text" value="" placeholder="Name" id="username" />
+					<input type="text" value="" placeholder="Nation" id="password" />
+					<button>Let's Chat!</button>
+				</div>
 			</div>
 		</div>
 	</div>
-	<div class ="row">
-		<div class="col-md-4">
-		    <div class="login-block">
-		        <h1>User Info</h1>
-		        <input type="text" value="" placeholder="Username" id="username" />
-		        <input type="password" value="" placeholder="Nation" id="password" />
-		        <button>Let's Chat!</button>
-		    </div>
-		 </div>
-	</div>
-</div>
+
+	<div class="container-fluid" style="display: none">
+        <div class="row">
+            <div id="message-window" class="">
+            </div>
+        </div>
+        <div class="row">
+            <div id="message-input" class="col-lg-6">
+                <div class="input-group">
+                    <input @keyup.enter="send" v-model="message" type="text" class="form-control" placeholder="Write a message...">
+                    <span class="input-group-btn">
+                    <button v-on:click="send" class="btn btn-default" type="button">Send</button>
+                    </span>
+                </div><!-- /input-group -->
+            </div><!-- /.col-lg-6 -->
+        </div>
+    </div>
 </body>
 
 </html>
