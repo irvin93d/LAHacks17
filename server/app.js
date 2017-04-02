@@ -9,6 +9,7 @@ var port = process.env.PORT || 3000;
 let chatWindowTime = 10 * 1000; // 10 seconds
 let maxClientsPerRoom = 4;
 let chatrooms = [];
+let expiredChatrooms = [];
 let nextRoomId = 0;
 
 class Chatroom {
@@ -96,8 +97,15 @@ function destroyExpiredChatrooms(){
 		room = chatrooms[i];
 		if(Date.now() > room.expire) {
 			console.log('fuck, kill this:', room.id);
-			io.to(room.id).emit('room expired');
-			// TODO Remove room from chatrooms
+			io.to(room.id).emit('room expired', {
+				roomID: room.id,
+				users: getUsersInRoom(room.id).map((u) => {
+					u.nick;
+				})
+			});
+			//TODO put in temp arra
+			chatrooms.splice(i,1);
+			--i;
 		}
 		// TODO else update room time
 	}
