@@ -6,22 +6,33 @@ let state = {
             { text: 'Cheese' },
             { text: 'Whatever else humans are supposed to eat' }
            ],
+    // chat: false,
     addMessage: function(m) {
         this.messages.push(m);
+    },
+    startChat: function() {
+        this.chat = true;
+        console.log("set chat true")
     }
-    };
-
-
-socket.emit('setup', {user: "Jonathan", country: "Sweden", profile: "www.facebook.com"});
+};
 
 window.onload = () => {
 
-    // Chat input
-    var input = new Vue({
-    el: '#message-input',
+    // Message list 
+    Vue.component('message-item', {
+        props: ['message'],
+        template: '<div>{{message.text}}</div>'
+    });
+    
+    // Chat page
+    var chat = new Vue({
+    el: '#chat',
     data: {
-        message: ''
+        message: '',
+        messages: state.messages,
+        visible: state.chat
     },
+
     methods: {
         send: function() {
             console.log(this.message);
@@ -32,25 +43,13 @@ window.onload = () => {
     }
     });
 
-    // Message list 
-    Vue.component('message-item', {
-        props: ['message'],
-        template: '<div>{{message.text}}</div>'
-    });
-
-    var messageList = new Vue({
-        el: '#message-list',
-        data: {
-            messages: state.messages
-        }
-    });
-
     var signIn = new Vue({
         el: '#user-info',
         data: {
             name: "",
             nation: "",
-            profile: ""
+            profile: "",
+            visible: !state.chat
         },
 
         methods: {
@@ -60,9 +59,10 @@ window.onload = () => {
             this.name = "";
             this.nation = "";
             this.profile= "";
-
+            this.visible = false;
+            state.startChat();            
+            }
         }
-    }
     });
 
 }
