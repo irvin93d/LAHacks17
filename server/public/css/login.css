@@ -1,9 +1,15 @@
+html, body {
+    height: 100%;
+}
+
 body {
     background: url('https://conferences.pa.ucla.edu/dm16/img/royce.jpg') no-repeat fixed center center;
     background-size: cover; 
     /*100% 100%;*/
     font-family: Montserrat;
     overflow: hidden;
+    /*overflow-y: scroll;*/
+    /*overflow-x: hidden;*/
 }
 
 .logo {
@@ -128,4 +134,50 @@ img {
 
 .login-block button:hover {
     background: #ff7b81;
+}
+
+
+/******************
+    Messenger
+******************/
+#chat {
+    height: 100%;
+    width: 100%;
+    background: white;
+}
+
+.chat-wrapper {
+    height: 100%;
+}
+
+.message-list {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding-bottom: 50px;
+}
+
+.message-item {
+    border-radius: 1.3em;
+    max-width: 300px;
+    padding: 8px 16px;
+    background: #f1f0f0;
+    overflow-wrap: break-word;
+    margin: 5px;
+}
+
+.message-item--me {
+}
+
+#message-input {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 50px;
+    width: 100%;
+}
+
+#message-input input {
+    height: 50px;
 }
