@@ -30,7 +30,7 @@ img {
 
 .login-block {
     max-width: 500px;
-    max-height: 315px;
+    max-height: 340px;
     padding: 20px;
     padding-bottom: 80px;
     display: block;
@@ -41,6 +41,7 @@ img {
     margin-right: auto;
     margin-top: 60px;
     margin-bottom: 30%;
+    font-family: Montserrat;
     transform: scale(1.2);
 
 }
@@ -68,6 +69,14 @@ img {
     /*text-transform: uppercase;*/
     margin-top: 0;
     margin-bottom: 15px;
+}
+
+.login-block h2 {
+    text-align: center;
+    color: #4d4d4d;
+    font-size: 16px;
+    line-height: .7;
+    margin-bottom: 20px;
 }
 
 .login-block input {
@@ -136,6 +145,16 @@ img {
     background: #ff7b81;
 }
 
+.dropdown {
+    /*position: relative;*/
+    background: #fff;
+    color: #333;
+    text-align: center;
+    font-family: Montserrat;
+    display: grid;
+    vertical-align: middle;
+    margin-bottom: 20px;
+}
 
 /******************
     Messenger
