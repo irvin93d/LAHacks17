@@ -37,7 +37,7 @@
 /* eslint-disable indent, no-unused-vars, no-multiple-empty-lines, max-nested-callbacks, space-before-function-paren, quotes, comma-spacing */
 'use strict';
 
-var precacheConfig = [["assets/LA_2024_Olympic_Bid_Logo.png","4b36be095ff2aca18e53c35f46b1eb14"],["assets/facebook.png","1a7a68b3d323045d62cf027ee69a2227"],["assets/facebook.xcf","3a7c91915e031692851522627dd595ab"],["assets/ico-512.png","5a6e5e4e42cd88cbe475ef29c19be667"],["assets/logo.png","8f6a3119554de0ea1cd93dd9a4aa2305"],["css/bootstrap-theme.css","b9b46bcc4dad6cc90fc4f95073c50735"],["css/bootstrap-theme.min.css","ab6b02efeaf178e0247b9504051472fb"],["css/bootstrap.css","2a31dca112f26923b51676cb764c58d5"],["css/bootstrap.min.css","ec3bb52a00e176a7181d454dffaea219"],["css/login.css","1620fd320083aa006047748e05626ef6"],["index.html","774851c7c0bcc3cd2c0725b1eeff000f"],["scripts/app.js","de4746f5870094f0c35f5fca30ef4eac"]];
+var precacheConfig = [["assets/LA_2024_Olympic_Bid_Logo.png","4b36be095ff2aca18e53c35f46b1eb14"],["assets/facebook.png","1a7a68b3d323045d62cf027ee69a2227"],["assets/facebook.xcf","3a7c91915e031692851522627dd595ab"],["assets/ico-512.png","5a6e5e4e42cd88cbe475ef29c19be667"],["assets/logo.png","8f6a3119554de0ea1cd93dd9a4aa2305"],["css/bootstrap-theme.css","b9b46bcc4dad6cc90fc4f95073c50735"],["css/bootstrap-theme.min.css","ab6b02efeaf178e0247b9504051472fb"],["css/bootstrap.css","2a31dca112f26923b51676cb764c58d5"],["css/bootstrap.min.css","ec3bb52a00e176a7181d454dffaea219"],["css/login.css","1620fd320083aa006047748e05626ef6"],["index.html","774851c7c0bcc3cd2c0725b1eeff000f"],["scripts/app.js","70dfc9533c42bf64210d799321a9f11d"]];
 var cacheName = 'sw-precache-v3-sw-precache-' + (self.registration ? self.registration.scope : '');
 
 

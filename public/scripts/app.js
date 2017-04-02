@@ -1,4 +1,4 @@
-let serverAddress = 'http://olympicschat.azurewebsites.net/';
+let serverAddress = 'https://olympicschat.azurewebsites.net/';
 let user = {};
 var socket = io.connect(serverAddress);
 let state = {
