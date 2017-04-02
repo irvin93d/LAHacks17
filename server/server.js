@@ -107,9 +107,7 @@ function destroyExpiredChatrooms(){
 			console.log('fuck, kill this:', room.id);
 			io.to(room.id).emit('room expired', {
 				roomID: room.id,
-				users: getUsersInRoom(room.id).map((u) => {
-					u.nick;
-				})
+				users: getUsersInRoom(room.id).map((u) => u.nick)
 			});	
 
 			expiredChatrooms.push(chatrooms.splice(i,1)[0]);
