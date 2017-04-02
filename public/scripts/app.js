@@ -45,11 +45,13 @@ window.onload = () => {
     data: {
         message: '',
         messages: state.messages,
-        users: 0,
+        noUsers: 0,
         seconds: 0,
         visible: false,
         requestContact: true,
-        users: ["boaty mc boatface", "fuck balls"]
+        users: ["boaty mc boatface", "fuck balls"],
+        roomID: 0,
+        checkedNames: []
     },
 
     methods: {
@@ -63,6 +65,15 @@ window.onload = () => {
                 var container = this.$el.querySelector(".message-list");                
                 window.scrollTo(0, container.scrollHeight);
             })
+        },
+        request: function() {
+            console.log("requesting " + this.checkedNames);
+            if(this.checkedNames.length) {
+                socket.emit('request contact', {roomId: this.roomID, names: this.checkedNames});
+            }
+            this.roomID = 0;
+            this.requestContact = false;
+            this.checkedNames = [];
         }
     }
     });
@@ -122,12 +133,14 @@ window.onload = () => {
     });
 
     socket.on('room expired', function(data) {
-    console.log("Room expired");
-    console.log(data);
-    state.messages.splice(0,state.messages.length);
-    chat.seconds = 0;
-    chat.noUsers = 0;
-    chat.requestContact = true;
+        console.log("Room expired");
+        console.log(data);
+        state.messages.splice(0,state.messages.length);
+        chat.users = data.users.filter( (u) => u && u.nick != user.nick);
+        chat.seconds = 0;
+        chat.noUsers = 0;
+        chat.requestContact = true;
+        chat.roomID = data.roomID;
 });
 
 }
