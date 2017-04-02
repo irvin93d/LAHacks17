@@ -105,12 +105,20 @@
 			</div>
 		</div>
 
-		<div class="request-contact" v-if="requestContact && users.length">
+		<div class="pop-up" v-if="requestContact && users.length">
 			<div v-for="user in users">
 				<input type="checkbox" :id="user" :value="user" v-model="checkedNames">
 				<label :for="user">{{user}}</label>
 			</div>
 			<button v-on:click="request">request</button>
+		</div>
+
+		<div class="pop-up" v-if="matches.length">
+			<h1>Match!</h1>
+			<div>{{matches[0].nick}}</div>
+			<div>{{matches[0].name}}</div>
+			<a v-bind:href="matches[0].profile">{{matches[0].profile}}</a>
+			<button v-on:click="dismiss">Dismiss</button> 
 		</div>
 	</div>
 </body>

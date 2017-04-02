@@ -52,7 +52,8 @@ window.onload = () => {
         requestContact: true,
         users: [],
         roomID: 0,
-        checkedNames: []
+        checkedNames: [],
+        matches: []
     },
 
     methods: {
@@ -75,6 +76,9 @@ window.onload = () => {
             this.roomID = 0;
             this.requestContact = false;
             this.checkedNames = [];
+        },
+        dismiss: function() {
+            this.matches.splice(0,1);
         }
     }
     });
@@ -146,6 +150,9 @@ window.onload = () => {
         chat.noUsers = 0;
         chat.requestContact = true;
         chat.roomID = data.roomID;
+        setTimeout(() => {
+            chat.request();
+        }, 25 * 1000)
     });
     
     socket.on('nickname', function(nick) {
@@ -153,5 +160,11 @@ window.onload = () => {
         chat.nick = nick;
         user.nick = nick;
     });
+
+    socket.on('match', function(user) {
+        console.log("match");
+        console.log(user);
+        chat.matches.push(user);
+    })
    
 }
