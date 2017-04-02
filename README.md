@@ -7,12 +7,12 @@ An application that let people connect through randomized chatrooms. Users stay 
 ### Server
 - [x] Holds multiple clients in room
 - [ ] Receives messages and stores a chat log
-- [ ] Pushes new chat messages to clients
-- [ ] Let new client be added to room
+- [x] Pushes new chat messages to clients
+- [x] Let new client be added to room
 - [ ] Pushes chat history to new clients
 - [x] Let Profiles be created and used to join rooms
-- [ ] Can hold multiple chat rooms at once
-- [ ] Closes and opens chat rooms (based on timer)
+- [x] Can hold multiple chat rooms at once
+- [x] Closes and opens chat rooms (based on timer)
 
 ### Rooms
 - [ ] Contains user interface with
@@ -22,8 +22,8 @@ An application that let people connect through randomized chatrooms. Users stay 
 	- [ ] time left to stay in room
 - [x] Connects to server
 - [x] Sends messages to server
-- [ ] Receives messages from server
-- [ ] Dropdown menu for nationality
+- [x] Receives messages from server
+- [x] Dropdown menu for nationality
 
 
 
