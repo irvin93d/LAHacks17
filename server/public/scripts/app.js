@@ -2,26 +2,37 @@ let serverAddress = 'http://localhost:3000';
 var socket = io.connect(serverAddress);
 let state = {
     messages: [
-            { text: 'Vegetables' },
-            { text: 'Cheese' },
-            { text: 'Whatever else humans are supposed to eat' }
+            {content: "hellasssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssu", user: "duane"},
+            {content: "hellasssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssu", user: "duane"},
+            {content: "hellasssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssu", user: "duane"},
+            {content: "hellasssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssu", user: "duane"},
+            {content: "hellasssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssu", user: "duane"},
+            {content: "hellasssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssu", user: "duane"},
+            {content: "fuk u", user: "jonathan"},
            ],
-    // chat: false,
     addMessage: function(m) {
         this.messages.push(m);
     },
     startChat: function() {
+        Vue.set(this, chat, true);
         this.chat = true;
         console.log("set chat true")
     }
 };
+
 
 window.onload = () => {
 
     // Message list 
     Vue.component('message-item', {
         props: ['message'],
-        template: '<div>{{message.text}}</div>'
+        template: `
+            <div class="message-item">
+                <span class="message-item--content">{{message.content}}</span>
+                <br>
+                <span class="message-item--from">-{{message.user}}</span>
+            </div>
+        `
     });
     
     // Chat page
@@ -30,13 +41,13 @@ window.onload = () => {
     data: {
         message: '',
         messages: state.messages,
-        visible: state.chat
+        visible: false
     },
 
     methods: {
         send: function() {
             console.log(this.message);
-            state.addMessage({text: this.message});
+            state.addMessage({content: this.message, user: "you"});
             socket.emit('message', this.message);
             this.message = "";
         }
@@ -49,21 +60,27 @@ window.onload = () => {
             name: "",
             nation: "",
             profile: "",
-            visible: !state.chat
+            visible: true
         },
 
         methods: {
         send: function() {
-            console.log(this.name);
+            console.log("Signed in");
             socket.emit('setup', {user: this.name, nation: this.nation, profile: this.profile});
             this.name = "";
             this.nation = "";
             this.profile= "";
             this.visible = false;
-            state.startChat();            
+            chat.visible = true;
             }
         }
     });
+
+    socket.on('message', function(message) {
+        state.messages.push(message);
+        console.log(message.content);
+    });
+
 
 }
 
