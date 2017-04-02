@@ -290,7 +290,9 @@
 	<div id="chat" v-if="visible">
 		<div class="chat-wrapper">
 			<div class="message-list">
-				<message-item v-for="item in messages" v-bind:message="item" v-bind:me="item.user == 'You'"></message-item>
+				<div class="max-width">
+					<message-item v-for="item in messages" v-bind:message="item" v-bind:me="item.user == 'You'"></message-item>
+				</div>
 			</div>
 			<div id="message-input">
 				<input @keyup.enter="send" v-model="message" type="text" class="form-control" placeholder="Write a message...">

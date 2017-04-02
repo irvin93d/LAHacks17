@@ -170,12 +170,17 @@ img {
 }
 
 .message-list {
-    /*height: 100%;*/
+    padding-bottom: 50px;
+    background: white;
+}
+
+.max-width {
+    max-width: 800px;
+    margin-right: auto;
+    margin-left: auto;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    padding-bottom: 50px;
-    background: white;
 }
 
 .message-item {
