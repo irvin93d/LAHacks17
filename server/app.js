@@ -26,8 +26,6 @@ io.on('connection', function(socket){
 
 	// TODO DONT HARD CODE 
 	socket.join('LOL STUDID ROOM');
-	// TODO should .to be included?
-	socket.broadcast.to('LOL STUDID ROOM').emit('message','Joined room');
 
 	// TODO Store all messages	
 	socket.on('message', (msg) => {
@@ -35,14 +33,15 @@ io.on('connection', function(socket){
 		message.time = Date.now();
 		message.user = socket.user;
 		message.content = msg;
+		socket.broadcast.to('LOL STUDID ROOM').emit('message', message);
 		console.log(message);
 	})
 
 	// TODO only add if user doesn't exist
 	socket.on('setup', (user) => {
-		console.log('setup');
 		socket.user = user;
 		console.log('User joined:', socket.user.user);
+		socket.broadcast.to('LOL STUDID ROOM').emit('user joined', user);
 	})
 
 	// TODO remove user from users. Store username and stuff in socket?
