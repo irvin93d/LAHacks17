@@ -16,10 +16,10 @@ An application that let people connect through randomized chatrooms. Users stay 
 
 ### Rooms
 - [ ] Contains user interface with
-    - [] chat history
-	- [x] message input
-	- [] list of connected clients
-	- [] time left to stay in room
+	- [ ] chat history
+ 	- [x] message input
+	- [ ] list of connected clients
+	- [ ] time left to stay in room
 - [x] Connects to server
 - [x] Sends messages to server
 - [ ] Receives messages from server
