@@ -23,6 +23,7 @@ An application that let people connect through randomized chatrooms. Users stay 
 - [x] Connects to server
 - [x] Sends messages to server
 - [ ] Receives messages from server
+- [ ] Dropdown menu for nationality
 
 
 
