@@ -17,49 +17,32 @@
 	<title>Olympic Login - Cool Shit</title>
 </head>
 <body>
-	<div class ="fluid-container" id="user-info">
-		<div v-if="visible">
-			<div class ="row">
-				<div class="col-md-4 vcenter">
-					<div class="logo">
-						<img src="assets/logo.png">
-					</div>
-				</div>
-			</div>
-			<div class ="row">
-				<div class="col-md-4">
-					<div class="login-block">
-						<h1>User Info</h1>
-						<input type="text" v-model="name" value="" placeholder="Name" id="name" />
-						<input type="text" v-model="nation" value="" placeholder="Nation" id="nation" />
-						<input type="text" v-model="profile" value="" placeholder="Facebook URL" id="facebook" />
-						<button v-on:click="send">Let's Chat!</button>
-					</div>
-				</div>
-			</div>
-		</div>
+
+<div class ="fluid-container" id="user-info">
+	<div class="logo">
+		<img src="assets/logo.png">
 	</div>
+	<div class="login-block" id="user-info">
+		<h1>User Info</h1>
+		<input type="text" v-model="name" value="" placeholder="Name" id="name" />
+		<input type="text" v-model="nation" value="" placeholder="Nation" id="nation" />
+		<input type="text" v-model="profile" value="" placeholder="Facebook URL" id="facebook" />
+		<button v-on:click="send">Let's Chat!</button>
+	</div>
+</div>
 
 	<div id="chat">
-		<div>
-			<div class="container-fluid">
-				<div class="row">
-					<div class="message-list">
-						 <message-item v-for="item in messages" v-bind:message="item"></message-item>
-					</div>
-				</div>
-				<div class="row">
-					<div id="message-input" class="col-lg-6">
-						<div class="input-group">
-							<input @keyup.enter="send" v-model="message" type="text" class="form-control" placeholder="Write a message...">
-							<span class="input-group-btn">
-							<button v-on:click="send" class="btn btn-default" type="button">Send</button>
-							</span>
-						</div><!-- /input-group -->
-					</div><!-- /.col-lg-6 -->
-				</div>
-			</div>
-		</div>
+		<div class="message-list">
+			 <message-item v-for="item in messages" v-bind:message="item"></message-item>
+	</div>
+		<div id="message-input" class="col-lg-6">
+			<div class="input-group">
+				<input @keyup.enter="send" v-model="message" type="text" class="form-control" placeholder="Write a message...">
+				<span class="input-group-btn">
+				<button v-on:click="send" class="btn btn-default" type="button">Send</button>
+				</span>
+			</div><!-- /input-group -->
+		</div><!-- /.col-lg-6 -->
 	</div>
 	
 </body>

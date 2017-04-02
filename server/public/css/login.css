@@ -24,9 +24,9 @@ img {
 
 .login-block {
     max-width: 500px;
-    height: 215px;
+    max-height: 315px;
     padding: 20px;
-    padding-bottom: 70px;
+    padding-bottom: 80px;
     display: block;
     background: #fff;
     border-radius: 5px;
@@ -95,6 +95,16 @@ img {
 .login-block input#nation:focus {
     background: #fff url('http://i.imgur.com/Qf83FTt.png') 20px bottom no-repeat;
     background-size: 16px 80px;
+}
+
+.login-block input#facebook {
+        background: #fff url('../assets/facebook.png') 20px top no-repeat;
+        background-size: 16px 80px;
+}
+
+.login-block input#facebook:focus {
+        background: #fff url('../assets/facebook.png') 20px bottom no-repeat;
+        background-size: 16px 80px;
 }
 
 .login-block input:active, .login-block input:focus {
