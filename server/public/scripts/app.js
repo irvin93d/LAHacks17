@@ -18,7 +18,18 @@ socket.on('room expired', function(data) {
     console.log("Room expired");
     console.log(data);
     state.messages.splice(0,state.messages.length);
+    state.seconds = 0;
+    state.noUsers = 0;
 });
+
+socket.on('disconnect', function() {
+	console.log('disconnect fired!');
+});
+socket.on('reconnect', function() {
+	console.log('reconnect fired!');
+});
+
+
 
 window.onload = () => {
 
@@ -40,6 +51,8 @@ window.onload = () => {
     data: {
         message: '',
         messages: state.messages,
+        users: 0,
+        seconds: 0,
         visible: false
     },
 
@@ -87,7 +100,6 @@ window.onload = () => {
 
             user = {name: this.name, nation: this.nation, profile: this.profile};
             socket.emit('setup', user);
-            user.name = "You";
             this.name = "";
             this.nation = "";
             this.profile= "";
@@ -106,4 +118,11 @@ window.onload = () => {
             window.scrollTo(0, container.scrollHeight);
         })
     });
+
+    socket.on('tick', function(data) {
+	    console.log('tick');
+        chat.seconds = Math.floor(data.timeToExpire / 1000)
+        chat.noUsers = data.noUsers;
+    });
+
 }
