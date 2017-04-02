@@ -9,7 +9,7 @@ var port = process.env.PORT || 3000;
 let chatWindowTime = 10 * 1000; // TODO set to 10 seconds
 let maxClientsPerRoom = 4;
 let chatrooms = [];
-let expiredChatrooms = [];
+let expiredChatrooms = {};
 let nextRoomId = 0;
 
 class Chatroom {
@@ -17,6 +17,7 @@ class Chatroom {
 		this.id = nextRoomId++;
 		this.expire = Date.now() + chatWindowTime;
 		this.numberOfClients = 0;
+		this.users = [];
 	}
 }
 
@@ -40,7 +41,29 @@ io.on('connection', function(socket){
 
 	socket.on('setup', (user) => {
 		socket.user = user;
+		socket.user.socketID = socket.id; 
 		assignNewRoom(socket);	
+	})
+
+	socket.on('request contact', (data) => {
+		if(!expiredChatrooms[data.roomID]) {
+			return;
+		}
+		let cr = expiredChatrooms[data.roomID];
+		for(req of data.names) {
+			let key = [socket.user.nick, req].sort().join(',');
+			if(cr.matches[key]) {
+				// match
+				for(let i = 0 ; i < cr.users.length ; ++i){
+					if(req === cr.users[i].nick) {
+						 io.to(socket.id).emit('match', cr.users[i].user);
+						 io.to(cr.users[i].socketID).emit('match', data.user);
+					}
+				}
+			} else {
+				cr.mathes[key] = true;
+			}
+		}
 	})
 
 	socket.on('disconnect', () => {
@@ -97,7 +120,7 @@ function assignNewRoom(socket){
 	socket.user.nick = setNickname(socket.user.nation);
 	console.log('User ', socket.user.nick, 'joined room', room.id);
 	socket.broadcast.to(socket.roomID).emit('user joined', socket.user.nick);
-	
+	room.users.push(socket.user);
 	io.to(socket.id).emit('nickname', socket.user.nick);
 }
 
@@ -112,9 +135,11 @@ function destroyExpiredChatrooms(){
 				users: getUsersInRoom(room.id).map((u) => u.nick)
 			});	
 
-			expiredChatrooms.push(chatrooms.splice(i,1)[0]);
+			let cr = chatrooms.splice(i,1)[0];
+			cr.matches = {};
+			expiredChatrooms[cr.id] = cr;
 			setTimeout(() => {
-				console.log('Removed', expiredChatrooms.splice(0,1)[0].id, 'from expired chatrooms');
+				delete expiredChatrooms[cr.id];
 			},30000);
 			
 			let a = io.sockets.adapter.rooms[room.id];
