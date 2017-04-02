@@ -1,4 +1,5 @@
 var express = require('express');
+var animals = require('animals');
 var app = express();
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
@@ -86,7 +87,7 @@ function getAvailableRoom() {
 
 // TODO 
 function setNickname(nation){
-	return 'Le ' + nation;
+	return nation + animals();
 }
 
 function destroyExpiredChatrooms(){
