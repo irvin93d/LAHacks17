@@ -70,7 +70,7 @@ window.onload = () => {
         request: function() {
             console.log("requesting " + this.checkedNames);
             if(this.checkedNames.length) {
-                socket.emit('request contact', {roomID: this.roomID, names: this.checkedNames, me: user.nick});
+                socket.emit('request contact', {roomID: this.roomID, names: this.checkedNames, me: user.prevNick});
             }
             this.roomID = 0;
             this.requestContact = false;
@@ -146,6 +146,7 @@ window.onload = () => {
     });
     
     socket.on('nickname', function(nick) {
+        user.prevNick = user.nick;        
         chat.nick = nick;
         user.nick = nick;
     });
