@@ -120,8 +120,13 @@ function destroyExpiredChatrooms(){
 
 			//TODO put in temp arra
 			--i;
+		} else {
+			io.to(room.id).emit('tick',	{
+				roomID: room.id,
+				noUsers: room.numberOfClients,
+				timeToExpire: room.expire - Date.now()
+			})
 		}
-		// TODO else update room time
 	}
 }
 
