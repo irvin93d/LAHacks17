@@ -81,6 +81,7 @@
 			<div class="message-list">
 				<div class="max-width">
 					<message-item v-for="item in messages" v-bind:message="item" v-bind:me="item.user == 'You'"></message-item>
+					<div class="no-messages" v-if="messages.length == 0">No messages yet, start the conversation!</div>
 				</div>
 			</div>
 			<div id="message-input">

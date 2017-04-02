@@ -2,15 +2,7 @@ let serverAddress = 'http://localhost:3000';
 let user = {};
 var socket = io.connect(serverAddress);
 let state = {
-    messages: [
-            {content: "hellasssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssu", user: "duane"},
-            {content: "hellasssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssu", user: "duane"},
-            {content: "hellasssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssu", user: "duane"},
-            {content: "hellasssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssu", user: "duane"},
-            {content: "hellasssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssu", user: "duane"},
-            {content: "hellasssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssu", user: "duane"},
-            {content: "fuk u", user: "jonathan"},
-           ],
+    messages: [],
     addMessage: function(m) {
         this.messages.push(m);
     },
@@ -25,6 +17,7 @@ let state = {
 socket.on('room expired', function(data) {
     console.log("Room expired");
     console.log(data);
+    state.messages.splice(0,state.messages.length);
 });
 
 window.onload = () => {
@@ -69,7 +62,7 @@ window.onload = () => {
         el: '#user-info',
         data: {
             name: "",
-            nation: "AF",
+            nation: "Afghan",
             profile: "",
             visible: true,
             invalidName: false,

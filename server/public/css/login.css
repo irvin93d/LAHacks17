@@ -186,6 +186,14 @@ img {
     justify-content: flex-end;
 }
 
+.no-messages {
+    align-self: center;
+    color: #999;
+    font-size: 40px;
+    font-weight: 300;
+    margin-top: 30px;
+}
+
 .message-item {
     border-radius: 1.3em;
     max-width: 300px;
