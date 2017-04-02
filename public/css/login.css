@@ -1,6 +1,7 @@
 html, body {
     height: 100%;
 }
+[v-cloak] { display: none; }
 
 body {
     background: url('https://conferences.pa.ucla.edu/dm16/img/royce.jpg') no-repeat fixed center center;

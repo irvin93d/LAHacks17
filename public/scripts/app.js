@@ -47,9 +47,10 @@ window.onload = () => {
         messages: state.messages,
         noUsers: 0,
         seconds: 0,
+        nick: "",
         visible: false,
         requestContact: true,
-        users: ["boaty mc boatface", "fuck balls"],
+        users: [],
         roomID: 0,
         checkedNames: []
     },
@@ -136,11 +137,16 @@ window.onload = () => {
         console.log("Room expired");
         console.log(data);
         state.messages.splice(0,state.messages.length);
-        chat.users = data.users.filter( (u) => u && u.nick != user.nick);
+        console.log(user);
+        chat.users = data.users.filter( (u) => u && u != user.nick);
         chat.seconds = 0;
         chat.noUsers = 0;
         chat.requestContact = true;
         chat.roomID = data.roomID;
-});
+    });
+    
+    socket.on('nickname', function(nick) {
+        chat.nick = nick;
+    });
 
 }
