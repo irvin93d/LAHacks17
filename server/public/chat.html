@@ -32,7 +32,8 @@
 
     <div class="container-fluid">
         <div class="row">
-            <div id="message-window" class="">
+            <div id="message-list" class="">
+                <message-item v-for="item in messages" v-bind:message="item"></message-item>
             </div>
         </div>
         <div class="row">
