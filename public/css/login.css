@@ -241,6 +241,9 @@ img {
 
 #message-input input {
     height: 50px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .request-contact {

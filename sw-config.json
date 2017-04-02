@@ -1,0 +1,12 @@
+{
+  "staticFileGlobs": [
+    "css/**.css",
+    "*.html",
+    "assets/**.*",
+    "scripts/**.js"
+  ],
+  "runtimeCaching": [{
+    "urlPattern": "/express/style/path/(.*)",
+    "handler": "networkFirst"
+  }]
+}

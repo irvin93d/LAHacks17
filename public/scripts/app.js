@@ -82,9 +82,9 @@ window.onload = () => {
     var signIn = new Vue({
         el: '#user-info',
         data: {
-            name: "",
-            nation: "Afghan",
-            profile: "",
+            name: localStorage.getItem("name"),
+            nation: localStorage.getItem("nation"),
+            profile: localStorage.getItem("profile"),
             visible: true,
             invalidName: false,
             invalidUrl: false
@@ -105,8 +105,11 @@ window.onload = () => {
             } else {
                 this.invalidUrl = false;
             }
-
             user = {name: this.name, nation: this.nation, profile: this.profile};
+            localStorage.setItem("name", user.name);
+            localStorage.setItem("nation", user.nation);
+            localStorage.setItem("profile", user.profile);
+
             socket.emit('setup', user);
             this.name = "";
             this.nation = "";
