@@ -25,6 +25,14 @@ An application that let people connect through randomized chatrooms. Users stay 
 - [x] Receives messages from server
 - [x] Dropdown menu for nationality
 
+### Client
+- [ ] Facebook sign in
+- [ ] Routing
+- [ ] Topics in rooms
+- [ ] Handle offline / disconnect
+- [ ] Statistics 
+	- [ ] Firebase
+	- [ ] Google analytics
 
 
 
